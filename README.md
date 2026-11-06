@@ -62,7 +62,7 @@ Sin Supabase, el formulario funciona en **modo demo**: simula el envío y muestr
 
 ### 4. Dominio y publicación
 1. Comprar el dominio (ej. `jesusdelgadofotografia.com`, o `.pe` en punto.pe).
-2. **Buscar y reemplazar** `jesusdelgadofotografia.com` por el dominio real en `index.html`, `robots.txt` y `sitemap.xml`.
+2. **Buscar y reemplazar** `jesus-delgado.vercel.app` (dominio actual) por el dominio propio en `index.html`, `robots.txt` y `sitemap.xml`.
 3. Publicar en **Vercel** o **Netlify** (gratis): arrastrar la carpeta, o conectar un repositorio de GitHub. No subir las carpetas originales de fotos (solo `assets/`, `css/`, `js/` y los archivos de la raíz).
 4. Conectar el dominio desde el panel del hosting (el HTTPS se activa automáticamente).
 
