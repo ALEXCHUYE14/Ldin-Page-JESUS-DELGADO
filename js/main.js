@@ -38,12 +38,17 @@
     const header = $('#header');
     const wa = $('.wa-float');
     let ticking = false;
+    let formInView = false;   // la sección de reserva ya tiene su propio botón de WhatsApp
     const update = () => {
       const y = window.scrollY;
       header.classList.toggle('is-scrolled', y > 40);
-      wa && wa.classList.toggle('is-visible', y > window.innerHeight * 0.35);
+      wa && wa.classList.toggle('is-visible', y > window.innerHeight * 0.35 && !formInView);
       ticking = false;
     };
+    const form = $('#leadForm');
+    if (wa && form && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => { formInView = entry.isIntersecting; update(); }, { threshold: 0.15 }).observe(form);
+    }
     update();
     window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     setTimeout(() => {

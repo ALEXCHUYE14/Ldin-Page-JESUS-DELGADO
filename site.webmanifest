@@ -1,0 +1,12 @@
+{
+  "name": "Jesús Delgado Fotografía",
+  "short_name": "J. Delgado",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1B1916",
+  "theme_color": "#1B1916",
+  "icons": [
+    { "src": "assets/icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

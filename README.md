@@ -19,6 +19,9 @@ assets/img/<sesión>/     Fotos WebP: grande (1800 px) y "-sm" (760 px)
 assets/img/og-cover.jpg  Imagen de preview para WhatsApp / Facebook (1200×630)
 assets/favicon.svg       Monograma JD
 robots.txt, sitemap.xml  SEO (el sitemap incluye las 30 imágenes del portafolio)
+404.html                 Página de error con enlace de vuelta al inicio
+site.webmanifest         Nombre e íconos al guardar la web en el celular (icon-180/512.png)
+vercel.json              Caché de imágenes (30 días) y cabeceras de seguridad
 ```
 
 **Decisiones clave**
