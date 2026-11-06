@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jesus-delgado.vercel.app/sitemap.xml
+Sitemap: https://jesusdelgado.vercel.app/sitemap.xml
