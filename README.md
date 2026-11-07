@@ -10,7 +10,7 @@ Landing page de lujo y portafolio de alta conversión. Sitio estático (HTML/CSS
 index.html               Todo el contenido (SEO): hero, artista, portafolio, historia
                          destacada, servicios, testimonios, FAQ, reserva, footer.
                          Incluye el set de íconos SVG propio (sprite) al inicio del <body>.
-css/styles.css           Sistema de diseño "Luxury Editorial Dark" (tokens en :root)
+css/styles.css           Sistema de diseño "Editorial Claro" (tokens en :root)
 js/config.js             ⚙️ Claves de Supabase + número de WhatsApp
 js/supabase-client.js    Cliente Supabase + LeadService.submit()
 js/main.js               Solo comportamiento: slider, filtros, lightbox, modal, formularios
