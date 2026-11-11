@@ -557,7 +557,12 @@ h1, h2, h3 { font-weight: 400; }
   .wa-float__tip { display: none; }
 }
 
+/* ---------- Parallax (las clases las añade js/main.js solo si hay movimiento) ---------- */
+.px-img { scale: 1.14; translate: 0 var(--py, 0px); will-change: translate; }
+.px-layer { translate: 0 var(--py, 0px); will-change: translate; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .hero__slider img { transform: none; }
+  .px-img, .px-layer { scale: none; translate: none; }
 }

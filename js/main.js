@@ -115,6 +115,78 @@
     });
   }
 
+  /* ---------------- Parallax ----------------
+     Capas que se mueven a distinta velocidad al hacer scroll.
+     Usa la propiedad CSS `translate` (independiente de `transform`), así no
+     choca con AOS, el Ken Burns del hero ni los efectos hover existentes.
+     Se desactiva con "reducir movimiento" y en navegadores sin soporte. */
+  function initParallax() {
+    if (reduceMotion || !window.CSS || !CSS.supports('translate', '0 1px') || !('IntersectionObserver' in window)) return;
+    const mobile = window.matchMedia('(max-width: 640px)');
+    const clamp = (v, a) => Math.max(-a, Math.min(a, v));
+    const items = [];
+
+    // 1) Fotos que se desplazan dentro de su marco (el marco recorta, nunca deja huecos)
+    $$('.about__portrait, .story__hero, .story__side, .service__media').forEach(box => {
+      const img = $('img', box);
+      if (!img) return;
+      img.classList.add('px-img');
+      items.push({ box, el: img, inner: true, amt: 0.06 });
+    });
+    // 2) Foto pequeña de "El Artista" flotando sobre el retrato
+    const inset = $('.about__inset');
+    if (inset && inset.parentElement) {
+      inset.classList.add('px-layer');
+      items.push({ box: inset.parentElement, el: inset, inner: false, amt: 0.12, max: 48 });
+    }
+
+    // 3) Hero: el fondo baja más lento que la página y el texto se desvanece
+    const hero = $('.hero');
+    const slider = $('#heroSlider');
+    const content = $('.hero__content');
+    if (slider) slider.classList.add('px-layer');
+    if (content) content.classList.add('px-layer');
+
+    const visible = new Set();
+    let heroVisible = true;
+    const io = new IntersectionObserver(entries => entries.forEach(en => {
+      if (en.target === hero) heroVisible = en.isIntersecting;
+      else en.isIntersecting ? visible.add(en.target) : visible.delete(en.target);
+    }), { rootMargin: '20% 0px' });
+    items.forEach(it => { it.box._px = it; io.observe(it.box); });
+    hero && io.observe(hero);
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const vh = window.innerHeight;
+      const k = mobile.matches ? 0.6 : 1;
+      visible.forEach(box => {
+        const it = box._px;
+        const r = box.getBoundingClientRect();
+        const off = (r.top + r.height / 2) - vh / 2;
+        const py = it.inner
+          ? clamp(off / (vh / 2 + r.height / 2), 1) * r.height * it.amt * k
+          : clamp(-off * it.amt * k, it.max);
+        it.el.style.setProperty('--py', py.toFixed(1) + 'px');
+      });
+      if (hero && heroVisible) {
+        const h = hero.offsetHeight || vh;
+        const y = Math.min(Math.max(window.scrollY, 0), h);
+        slider && slider.style.setProperty('--py', (y * 0.35 * k).toFixed(1) + 'px');
+        if (content) {
+          content.style.setProperty('--py', (y * 0.18 * k).toFixed(1) + 'px');
+          content.style.opacity = Math.max(0, 1 - y / (h * 0.75)).toFixed(3);
+        }
+      }
+    };
+    const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    window.addEventListener('load', request);
+    update();
+  }
+
   /* ---------------- Contadores ---------------- */
   function initCounters() {
     const els = $$('[data-count]');
@@ -410,6 +482,7 @@
     initMobileMenu();
     initScrollspy();
     initHero();
+    initParallax();
     initCounters();
     initPortfolio();
     initTestimonials();
